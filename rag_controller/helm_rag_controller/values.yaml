@@ -1,0 +1,35 @@
+namespace: rag-controller
+
+deployment:
+  name: rag-controller
+  replicaCount: 2
+  labels:
+    appName: rag-controller
+  container:
+    name: rag-controller
+    portNumber: 8005
+    args: []
+  image:
+    name: nthaiduong83/rag_controller
+    version: v1
+    imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 1.5Gi
+
+service:
+  name: rag-svc
+  type: LoadBalancer
+  httpPort:
+    enable: true
+    port: 82
+    targetPort: 8005
+
+env:
+  WEAVIATE_URL: http://weaviate.weaviate.svc.cluster.local:80
+  VECTORIZE_URL: http://emb-svc.emb.svc.cluster.local:81/vectorize
+  LLM_API_URL: https://nthaiduong83.serveo.net/complete

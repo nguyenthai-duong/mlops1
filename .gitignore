@@ -1,0 +1,4 @@
+llm1/model/
+llm1/tokenizer/
+data/
+.git/

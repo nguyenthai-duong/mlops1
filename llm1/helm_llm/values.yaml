@@ -1,0 +1,31 @@
+namespace: rag
+
+deployment:
+  name: llm
+  replicaCount: 1
+  labels:
+    appName: llm
+  container:
+    name: llm
+    portNumber: 8000  
+    args: []
+  image:
+    name: nthaiduong83/llm # Thay đổi tên image theo Docker Hub của bạn
+    version: v1
+    imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "12"
+
+service:
+  name: llm-svc
+  type: LoadBalancer
+  httpPort:
+    enable: true
+    port: 82
+    nodePort: 32002
+    targetPort: 8000  # Đảm bảo rằng cổng này phù hợp với cổng được exposed bởi ứng dụng

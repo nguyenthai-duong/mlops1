@@ -1,0 +1,7 @@
+minikube start
+kubectl create ns emb
+helm upgrade --install text-vectorizer ./embedding/helm_embedding --namespace emb
+kubectl create ns weaviate
+helm upgrade --install   "weaviate"   ./weaviate   --namespace "weaviate"   --values ./weaviate/values.yaml
+kubectl create ns rag-controller
+helm upgrade --install   rag-controller   ./rag_controller/helm_rag_controller   --namespace "rag-controller" 
